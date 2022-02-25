@@ -1,0 +1,123 @@
+﻿@model WebApplication9.Models.MomTodo
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h4 class="text-center m-2"><b>Minutes of Meeting</b></h4>
+<div class="form-horizontal row">
+    <hr />
+    <div class="col-sm-4">
+        <b>@Html.LabelFor(model => model.minutes.momTitle, htmlAttributes: new { @class = "form-label" })</b>
+        @Html.TextBoxFor(model => model.minutes.momTitle, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-sm-4">
+        <b> @Html.LabelFor(model => model.minutes.createdBy, htmlAttributes: new { @class = "form-label" })</b>
+        @Html.TextBoxFor(model => model.minutes.createdBy, new { @class = "form-control", @readonly = "readonly" })
+
+    </div>
+    <div class="col-sm-4">
+        <b> @Html.LabelFor(model => model.minutes.createdOn, htmlAttributes: new { @class = "form-label" })</b>
+        @Html.TextBoxFor(model => model.minutes.createdOn, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <b> @Html.LabelFor(model => model.minutes.momDescription, htmlAttributes: new { @class = "form-label" })</b>
+        @Html.TextAreaFor(model => model.minutes.momDescription, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<hr />
+
+
+@if (Model.minutes.Todo != null && Model.minutes.Todo.Count>0)
+{
+    <div class="row pb-1">
+        <div class="col-md-4">
+            <b>Task Description</b>
+        </div>
+
+        <div class="col-md-4">
+            <b>Assigned To</b>
+        </div>
+
+        <div class="col-md-4">
+            <b>Due Date</b>
+        </div>
+    </div>
+    foreach (var TodoList in Model.minutes.Todo)
+    {
+        <div class="form-horizontal row pb-1">
+            <div class="col-md-4">
+                @Html.TextBox("taskDescription", TodoList.taskDescription, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+
+            <div class="col-md-4">
+                @Html.TextBox("empid", TodoList.user.emailId, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+
+            <div class="col-md-4 row">
+                <div class="col-10">
+                    @Html.TextBox("dueDate", TodoList.dueDate, "{0:yyyy-MM-ddThh:mm}", new { @class = "form-control", @type = "datetime-local", @readonly = "readonly" })
+                </div>
+                <div class="col-2">
+                    @Html.ActionLink("Delete", "Delete", "Todoes", new { id = TodoList.todoId }, new { @class = "btn btn-danger btn-sm " })
+                </div>
+            </div>
+        </div>
+    }
+}
+<hr />
+
+<h5><b>Assign Tasks</b></h5>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal row">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.todoList.momId, new { @Value = Model.minutes.momId })
+        <div class="col-md-4">
+            <b>
+                @Html.LabelFor(model => model.todoList.taskDescription, "Task Description", htmlAttributes: new { @class = "form-label" })
+            </b>
+            @Html.EditorFor(model => model.todoList.taskDescription, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.todoList.taskDescription, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-4">
+            <b>
+                @Html.LabelFor(model => model.todoList.empId, "Assigned To", htmlAttributes: new { @class = "form-label" })
+            </b>
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.todoList.empId, new SelectList(ViewBag.empId, "empId", "emailId"), htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.todoList.empId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <b>
+                @Html.LabelFor(model => model.todoList.dueDate, "Due Date", htmlAttributes: new { @class = "form-label" })
+            </b>
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.todoList.dueDate, new { @class = "form-control", @type = "datetime-local", @min = DateTime.Now.ToString("yyyy-MM-ddThh:mm") })
+                @Html.ValidationMessageFor(model => model.todoList.dueDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

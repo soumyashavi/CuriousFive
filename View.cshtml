@@ -1,0 +1,85 @@
+﻿@model WebApplication9.Models.MomTodo
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h4 class="text-center m-2"><b>Minutes of Meeting</b></h4>
+<div class="form-horizontal row">
+    <hr />
+    <div class="col-sm-4">
+        <b>@Html.LabelFor(model => model.minutes.momTitle, htmlAttributes: new { @class = "form-label" })</b>
+        @Html.TextBoxFor(model => model.minutes.momTitle, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+    <div class="col-sm-4">
+        <b> @Html.LabelFor(model => model.minutes.createdBy, htmlAttributes: new { @class = "form-label" })</b>
+        @Html.TextBoxFor(model => model.minutes.createdBy, new { @class = "form-control", @readonly = "readonly" })
+
+    </div>
+    <div class="col-sm-4">
+        <b> @Html.LabelFor(model => model.minutes.createdOn, htmlAttributes: new { @class = "form-label" })</b>
+        @Html.TextBoxFor(model => model.minutes.createdOn, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <b> @Html.LabelFor(model => model.minutes.momDescription, htmlAttributes: new { @class = "form-label" })</b>
+        @Html.TextAreaFor(model => model.minutes.momDescription, new { @class = "form-control", @readonly = "readonly" })
+    </div>
+</div>
+<hr />
+
+
+@if (Model.minutes.Todo != null && Model.minutes.Todo.Count > 0)
+{
+    <div class="row pb-1">
+        <div class="col-md-4">
+            <b>Task Description</b>
+        </div>
+
+        <div class="col-md-3">
+            <b>Assigned To</b>
+        </div>
+
+        <div class="col-md-4">
+            <b>Due Date</b>
+        </div>
+    </div>
+    foreach (var TodoList in Model.minutes.Todo)
+    {
+        <div class="form-horizontal row pb-1">
+            <div class="col-md-4">
+                @Html.TextBox("taskDescription", TodoList.taskDescription, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+
+            <div class="col-md-3">
+                @Html.TextBox("empid", TodoList.user.emailId, new { @class = "form-control", @readonly = "readonly" })
+            </div>
+
+            <div class="col-md-5 row">
+                <div class="col-9">
+                    @Html.TextBox("dueDate", TodoList.dueDate, "{0:yyyy-MM-ddThh:mm}", new { @class = "form-control", @type = "datetime-local", @readonly = "readonly" })
+                </div>
+                <div class="col-3">
+                    @if (TodoList.isActive)
+                    {
+                        <button class="btn btn-warning btn-sm disabled ">In Progress</button>
+                    }
+                    else
+                    { <button class="btn btn-success btn-sm disabled">Completed</button>}
+                </div>
+            </div>
+        </div>
+    }
+}
+<hr />
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

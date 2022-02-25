@@ -1,0 +1,115 @@
+﻿@model WebApplication9.Models.Roster
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2 class="text-center p-2">Add Roster Details</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal" style="align-content:center">
+    <div class="row">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group col-12 col-md-4" style="font-weight:bold">
+            @Html.LabelFor(model => model.userassigned.user.empId, "Email Id", htmlAttributes: new { @class = "form-label" })
+            <div class="col-md-10">
+                @Html.DropDownList("empId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.userassigned.user.empId, "", new { @class = "text-danger" })
+            </div>
+        </div><br /> 
+        <div class="form-group col-12 col-md-4" style="font-weight:bold">
+            @Html.LabelFor(model => model.userassigned.agId, "Assignment Group", htmlAttributes: new { @class = "form-label" })
+            <div class="col-md-10">
+                @Html.DropDownList("agId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.userassigned.agId, "", new { @class = "text-danger" })
+            </div>
+        </div><br />
+
+
+        <div class="form-group col-12 col-md-4" style="font-weight:bold">-
+            @Html.LabelFor(model => model.isOneDay, htmlAttributes: new { @class = "form-label" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.CheckBoxFor(model => model.isOneDay, new { @class = "checkbox form-check-input" })
+                    @Html.ValidationMessageFor(model => model.isOneDay, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div><br />
+
+
+        <div class="form-group col-12 col-md-4" style="font-weight:bold" id="startDateDiv">
+            @Html.LabelFor(model => model.startDate, htmlAttributes: new { @class = "form-label" })
+            <div class="col-md-10">
+                <div class="startTime">
+                    @Html.EditorFor(model => model.startDate, new { htmlAttributes = new { @class = "startTime form-control" } })
+                    @Html.ValidationMessageFor(model => model.startDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div><br />
+
+        <div class="form-group endTime col-12 col-md-4" style="font-weight:bold" id="endDateDiv">
+            @Html.LabelFor(model => model.endDate, htmlAttributes: new { @class = "form-label" })
+            <div class="col-md-10">
+                <div class="endTime">
+                    @Html.EditorFor(model => model.endDate, new { htmlAttributes = new { @class = "endTime form-control" } })
+                   @Html.ValidationMessageFor(model => model.endDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div><br />
+
+        <div class="form-group col-12 col-md-4" style="font-weight:bold">
+            @Html.LabelFor(model => model.onCall, htmlAttributes: new { @class = "form-label" })
+            <div class="col-md-10">
+                @Html.DropDownList("OnCall", new List<SelectListItem> { new SelectListItem { Text = "Not Applied", Value = "Not Applied" }, new SelectListItem { Text = "Primary", Value = "Primary" }, new SelectListItem { Text = "Secondary", Value = "Secondary" } }, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.onCall, "", new { @class = "text-danger" })
+            </div>
+        </div><br />
+
+
+        <div class="form-group col-12 col-md-4" style="font-weight:bold">
+            @Html.LabelFor(model => model.shift, htmlAttributes: new { @class = "form-label" })
+            <div class="col-md-10">
+                @Html.DropDownList("shift", new List<SelectListItem> { new SelectListItem { Text = "general", Value = "general" }, new SelectListItem { Text = "night", Value = "night" } }, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.shift, "", new { @class = "text-danger" })
+            </div>
+        </div><br />
+
+        <div class="form-group p-2">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+</div>
+}
+<script>
+    var checker = document.getElementById('isOneDay');
+    var endDateBox = document.getElementById('endDateDiv');
+    var endDateValue = document.getElementById('endDate');
+    var startDateValue = document.getElementById('startDate');
+    // when unchecked or checked, run the function
+    
+    checker.onchange = function () {
+        startDateValue.onchange = function () {
+            if (checker.checked) {
+                endDateValue.value = startDateValue.value;
+            }
+        }
+         if (this.checked) {
+             endDateValue.readOnly = true;
+             endDateValue.value = startDateValue.value;
+         } else {
+             endDateValue.readOnly = false;
+             endDateValue.value = null;
+        }
+    }
+</script>
+
+
+
+

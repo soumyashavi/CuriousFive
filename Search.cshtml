@@ -1,0 +1,113 @@
+﻿@model IEnumerable<WebApplication9.Models.Roster>
+
+@{
+    ViewBag.Title = "Search";
+}
+
+<h2 style="text-align:center">Roster</h2>
+<p style="text-align:center">
+    @using (Html.BeginForm("Search", "Rosters", FormMethod.Get))
+    {
+        <b > Search by 
+            
+            @Html.DropDownList("SearchItem", new List<SelectListItem>
+            { 
+                  new SelectListItem { Text = "EmployeeId", Value = "1", Selected=true},
+                  new SelectListItem { Text = "EmailId", Value = "2"},
+                  new SelectListItem { Text = "TeamName", Value = "3"},
+                  new SelectListItem { Text = "Employee Name", Value = "4"},
+                  new SelectListItem { Text = "Shift", Value = "5"}
+            }, "Select Search-item") 
+        </b>
+        @Html.TextBox("search") <input type="submit" value=" Search" class="btn btn-dark btn-sm" />
+        <notag>&nbsp; &nbsp; &nbsp;</notag>
+        <b> Search By Date</b>
+            @Html.TextBox("searchDate",null,new { @type="date"}) 
+        <input type="submit" value=" Search" class="btn btn-dark btn-sm" />
+    }
+
+</p>
+<table class="table" style="text-align:center">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.userassigned.empId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.userassigned.user.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.userassigned.user.emailId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.userassigned.assignmentgroup.agName)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.startDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.endDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.onCall)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.shift)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.userassigned.empId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.userassigned.user.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.userassigned.user.emailId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.userassigned.assignmentgroup.agName)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.startDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.endDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.onCall)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.shift)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.rosterId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.rosterId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.rosterId })
+        </td>
+    </tr>
+}
+
+</table>
+<div>
+    @using (Html.BeginForm("ExportToExcel", "Rosters", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+
+        <div>
+            <input type="submit" value="Export" class="btn btn-success" />
+        </div>
+
+    }
+</div>
+
+<script>
+    
+    $(document).ready(function () {
+        $("#searchDate").val("");
+        $("#search").val("");
+    });
+</script>

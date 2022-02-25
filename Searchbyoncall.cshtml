@@ -1,0 +1,92 @@
+﻿@model IEnumerable<WebApplication9.Models.Roster>
+
+@{
+    ViewBag.Title = "Searchbyoncall";
+}
+
+<h2 style="text-align:center">SearchByOnCall</h2>
+
+<p style="text-align:center">
+    @using (Html.BeginForm("Searchbyoncall", "Rosters", FormMethod.Get))
+    {<b style="font-size:18px;color:black;font-weight:bold"> Enter On call Value </b>@Html.TextBox("oncall")
+    <b style="font-size:18px;color:black;font-weight:bold"> Enter Team Name </b>@Html.TextBox("teamname")
+
+    <input type="submit" value=" Search" class="btn btn-dark" />
+}
+</p>
+    <table class="table" style="text-align:center">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.userassigned.empId)
+            </th>
+            <td>
+                @Html.DisplayNameFor(model => model.userassigned.user.name)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.userassigned.user.emailId)
+            </td>
+            <td>
+                @Html.DisplayNameFor(model => model.userassigned.assignmentgroup.agName)
+            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.startDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.endDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.onCall)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.shift)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.userassigned.empId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.userassigned.user.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.userassigned.user.emailId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.userassigned.assignmentgroup.agName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.startDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.endDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.onCall)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.shift)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.rosterId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.rosterId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.rosterId })
+            </td>
+        </tr>
+        }
+
+    </table>
+    <div>
+        @using (Html.BeginForm("ExportToExcel", "Rosters", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+
+            <div>
+                <input type="submit" value="Export" class="btn btn-success" />
+            </div>
+
+        }
+    </div>

@@ -1,0 +1,38 @@
+﻿@model WebApplication9.Models.User
+
+@{
+    ViewBag.Title = "login";
+}
+
+<div class="container">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row text-center mt-4 mb-5">
+            <div class="col-sm-4"></div>
+            <div class="form-row card col-sm-4 mt-2 p-3 text-white bg-dxc-grey" id="logincard">
+                <h4 class="card-title">LOGIN HERE</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.EditorFor(model => model.empId, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your Employee Id" } })
+                    @Html.ValidationMessageFor(model => model.empId, "", new { @class = "text-danger" })
+                </div>
+                <br />
+                <div class="form-group">
+                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", @placeholder = "Your DOB", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                </div>
+                <br />
+                <div class="form-group">
+                    <button type="submit" class="btn btn-light">Login<i class="fas fa-sign-in-alt"></i></button>
+                </div>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    }
+</div>
+
+

@@ -1,0 +1,58 @@
+﻿@model WebApplication9.Models.Todo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Todo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.mom.momName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mom.momName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.user.emailId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.user.emailId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.taskDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.taskDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dueDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dueDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isActive)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.todoId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

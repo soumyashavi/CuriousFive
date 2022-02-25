@@ -1,0 +1,46 @@
+﻿@model IEnumerable<WebApplication9.Models.Todo>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 ></h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.mom.momTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.taskDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dueDate)
+        </th>
+        <th>
+           Status
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.mom.momTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.taskDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dueDate)
+        </td>
+        <td>
+            @if (item.isActive)
+            {
+            @Html.ActionLink("Mark As Complete", "Complete", new { id = item.todoId })
+            }
+            else
+            { <notag>Completed</notag>}
+        </td>
+    </tr>
+}
+
+</table>
